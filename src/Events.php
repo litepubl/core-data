@@ -12,7 +12,7 @@ class Events extends Data
     public function __construct(FactoryInterface $factory)
     {
         parent::__construct($factory);
-        $this->eventManager = $this->factory->createEvents();
+        $this->eventManager = $this->factory->createEventManager($this);
         $this->load();
     }
 

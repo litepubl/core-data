@@ -1,7 +1,12 @@
 <?php
 namespace litepubl\core\data;
 
-use litepubl\core\storage\Data as DataStorage;
+use litepubl\core\storage\storables\StorableInterface;
+use litepubl\core\storage\storables\StorableTrait;
+use litepubl\core\storage\storables\SaveableInterface;
+use litepubl\core\storage\storables\SaveableTrait;
+use litepubl\core\storage\storables\StorageAwareInterface;
+use litepubl\core\storage\storables\StorageAwareTrait;
 use litepubl\core\container\factories\InstallableInterface;
 use litepubl\core\container\factories\InstallableTrait;
 use litepubl\core\container\factories\FactoryInterface;
@@ -15,8 +20,11 @@ use litepubl\core\container\factories\FactoryInterface;
  * @property-read string $thisTable
  */
 
-class Data extends DataStorage implements InstallableInterface
+class Data implements StorableInterface, SaveableInterface, StorageAwareInterface, InstallableInterface
 {
+    use StorableTrait;
+    use SaveableTrait;
+    use StorageAwareTrait;
     use InstallableTrait;
     use PropsTrait;
     use DBTrait;
@@ -63,10 +71,5 @@ class Data extends DataStorage implements InstallableInterface
     public function error($Msg, $code = 0)
     {
         throw new \Exception($Msg, $code);
-    }
-
-    public function getApp(): App
-    {
-        return static ::getAppInstance();
     }
 }
